@@ -8,6 +8,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 
+""" Link for dataset  
+                      https://www.kaggle.com/datasets/zhaoyingzhu/heartcsv """
+
 # Load the dataset
 data = pd.read_csv("/content/drive/MyDrive/Colab Notebooks/Heart.csv")
 data = data.drop("Unnamed: 0", axis=1)
