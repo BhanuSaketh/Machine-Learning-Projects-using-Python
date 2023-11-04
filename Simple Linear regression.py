@@ -8,7 +8,7 @@ from sklearn.linear_model import LinearRegression
 %matplotlib inline
 
 # Load the Iris dataset
-data = sns.load_dataset("iris")
+data = sns.load_dataset("iris") 
 
 
 # Create a scatter plot to visualize the data
