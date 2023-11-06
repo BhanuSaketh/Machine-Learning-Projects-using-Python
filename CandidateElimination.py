@@ -15,30 +15,31 @@ data = {
 df = pd.DataFrame(data)
 
 label_encoders = {}
-categorical_columns = ['sky', 'airTemp', 'humidity', 'wind', 'water', 'forecast', 'enjoySport']
+categorical_columns = ['Sky', 'AirTemp', 'Humidity', 'Wind', 'Water', 'Forecast', 'EnjoySport']
 for column in categorical_columns:
     label_encoders[column] = LabelEncoder()
-    data[column] = label_encoders[column].fit_transform(data[column])
+    df[column] = label_encoders[column].fit_transform(df[column])
 
-#candidateElimination Algorithm
-
-
+# Candidate Elimination Algorithm
 def initialize_g(d):
     # Initialize the general boundary set to the most general hypothesis
     g = np.array(['?'] * d)
     return g
+
 def initialize_s(d):
     # Initialize the specific boundary set to the most specific hypothesis
     s = np.array(['0'] * d)
     return s
+
 def is_consistent(hypothesis, example):
     for h, e in zip(hypothesis, example):
         if h != '?' and h != e:
             return False
     return True
+
 def candidate_elimination(examples):
     d = len(examples.columns) - 1  # Number of features (excluding the target column)
-    
+
     G = [initialize_g(d)]
     S = [initialize_s(d)]
 
@@ -69,7 +70,7 @@ def candidate_elimination(examples):
 
     return G, S
 
-G, S = candidate_elimination(data)
+G, S = candidate_elimination(df)
 
 print("General Boundary Set (G):")
 for g in G:
