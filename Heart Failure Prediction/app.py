@@ -6,7 +6,7 @@ from sklearn.model_selection import GridSearchCV
 app = Flask(__name__)
 
 # Load the dataset
-data = pd.read_csv("C:/Users/pbhan/OneDrive/Desktop/python/venv/YourAppFolder/heart_failure_clinical_records_dataset (1).csv")
+data = pd.read_csv('heart_failure_clinical_records_dataset (1).csv')
 
 # Split the data into features (x) and target (y)
 x = data.drop("DEATH_EVENT", axis=1)
@@ -24,7 +24,6 @@ grid_search.fit(x, y)
 
 # Get the best parameters
 best_params = grid_search.best_params_
-print("Best Parameters:", best_params)
 
 # Initialize and train the Decision Tree Classifier with the best parameters
 dt = DecisionTreeClassifier(**best_params)
@@ -46,12 +45,19 @@ def predict():
         smoking = int(request.form.get("smoking"))
         time = int(request.form.get("time"))
 
-        sample_data = [[age, anaemia, creatinine_phosphokinase, diabetes, ejection_fraction, platelets, high_blood_pressure, serum_creatinine, serum_sodium, sex, smoking, time]]
+        sample_data = [
+            [
+                age, anaemia, creatinine_phosphokinase, diabetes, ejection_fraction, platelets, high_blood_pressure,
+                serum_creatinine, serum_sodium, sex, smoking, time
+            ]
+        ]
 
         prediction = dt.predict(sample_data)
-        return render_template("model.html", prediction=prediction[0])
+        prediction_text = "Have a happy life" if prediction[0] == 0 else "Potential risk of death"
 
-    return render_template("model.html", prediction="Have a happy life")
+        return render_template("model.html", prediction=prediction_text)
+
+    return render_template("model.html", prediction="")
 
 if __name__ == "__main__":
     app.run(debug=True)
